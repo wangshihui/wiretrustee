@@ -111,3 +111,4 @@ Generate gRpc code:
 protoc -I proto/ proto/management.proto --go_out=. --go-grpc_out=.
 ```
 
+docker build -t  139.198.26.42:5000/wiretrustee/management:latest .

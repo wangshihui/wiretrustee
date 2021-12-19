@@ -8,7 +8,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	s "github.com/wiretrustee/wiretrustee/management/server"
 	"github.com/wiretrustee/wiretrustee/management/server/http/handler"
-	"github.com/wiretrustee/wiretrustee/management/server/http/middleware"
 	"golang.org/x/crypto/acme/autocert"
 	"net/http"
 	"time"
@@ -62,16 +61,17 @@ func (s *Server) Stop(ctx context.Context) error {
 
 // Start defines http handlers and starts the http server. Blocks until server is shutdown.
 func (s *Server) Start() error {
-
-	jwtMiddleware, err := middleware.NewJwtMiddleware(s.config.AuthIssuer, s.config.AuthAudience, s.config.AuthKeysLocation)
-	if err != nil {
-		return err
-	}
+	var err error
+	//jwtMiddleware, err := middleware.NewJwtMiddleware(s.config.AuthIssuer, s.config.AuthAudience, s.config.AuthKeysLocation)
+	//if err != nil {
+	//	return err
+	//}
 
 	corsMiddleware := cors.AllowAll()
 
 	r := mux.NewRouter()
-	r.Use(jwtMiddleware.Handler, corsMiddleware.Handler)
+	//r.Use(jwtMiddleware.Handler, corsMiddleware.Handler)
+	r.Use(corsMiddleware.Handler)
 
 	peersHandler := handler.NewPeers(s.accountManager)
 	keysHandler := handler.NewSetupKeysHandler(s.accountManager)
