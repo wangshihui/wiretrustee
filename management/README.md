@@ -110,5 +110,9 @@ Generate gRpc code:
 #!/bin/bash
 protoc -I proto/ proto/management.proto --go_out=. --go-grpc_out=.
 ```
+set CGO_ENABLED=0;
+set GOOS=linux
+set GOARCH=amd64
+go build  -o wiretrustee-mgmt main.go
 
 docker build -t  139.198.26.42:5000/wiretrustee/management:latest .
