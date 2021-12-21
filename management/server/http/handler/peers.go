@@ -18,6 +18,7 @@ type Peers struct {
 //PeerResponse is a response sent to the client
 type PeerResponse struct {
 	Name      string
+	Key      string
 	IP        string
 	Connected bool
 	LastSeen  time.Time
@@ -119,6 +120,7 @@ func (h *Peers) GetPeers(w http.ResponseWriter, r *http.Request) {
 func toPeerResponse(peer *server.Peer) *PeerResponse {
 	return &PeerResponse{
 		Name:      peer.Name,
+		Key: peer.Key,
 		IP:        peer.IP.String(),
 		Connected: peer.Status.Connected,
 		LastSeen:  peer.Status.LastSeen,
